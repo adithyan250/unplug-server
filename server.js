@@ -9,7 +9,11 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors());
+const allowedOrigin = process.env.CLIENT_URL || '*';
+app.use(cors({
+  origin: allowedOrigin === '*' ? '*' : allowedOrigin.split(','),
+  credentials: allowedOrigin !== '*'
+}));
 app.use(express.json());
 
 // Import middleware
